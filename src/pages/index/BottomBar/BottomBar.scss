@@ -1,0 +1,59 @@
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  border-top: 1px solid #b6b6b6;
+  background-color: rgba(246, 246, 246, 0.95);
+  .btn-item {
+    flex: 1;
+    font-size: 11px;
+    display: flex; //其中每一项也是flex布局
+    flex-direction: column;
+    justify-content: center; //在主轴上居中(垂直方向)
+    align-items: center; //在侧轴上也居中
+    color: #999;
+    .tab-icon {
+      //tab-icon的公共样式
+      margin-bottom: 4px;
+      width: 25px;
+      height: 25px;
+      background-size: cover; //让背景图充满全屏
+    }
+    &.active {
+      color: #000;
+    }
+    //从父元素上开始找，如果有my就应用样式
+    &.my {
+      .tab-icon {
+        background-image: url(./img/myIcon.png);
+      }
+    }
+    &.my.active {
+      .tab-icon {
+        background-image: url(./img/myIconActive.png);
+      }
+    }
+    &.order {
+      .tab-icon {
+        background-image: url(./img/orderIcon.png);
+      }
+    }
+    &.order.active {
+      .tab-icon {
+        background-image: url(./img/orderIconActive.png);
+      }
+    }
+    &.home {
+      .tab-icon {
+        background-image: url(./img/homeIcon.png);
+      }
+    }
+    &.home.active {
+      .tab-icon {
+        background-image: url(./img/homeIconActive.png);
+      }
+    }
+  }
+}

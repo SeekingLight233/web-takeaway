@@ -51,6 +51,9 @@ module.exports = {
     category: "./src/pages/category/index.js",
     detail: "./src/pages/detail/index.js",
   },
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 
   output: {
     path: devPath,
