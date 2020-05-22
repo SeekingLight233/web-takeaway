@@ -1,59 +1,58 @@
-const path = require("path");
-const fs = require("fs");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const srcRoot = path.resolve(__dirname, "src");
-const devPath = path.resolve(__dirname, "dev");
-const pageDir = path.resolve(srcRoot, "pages");
-const mainFile = "index.js";
+const path = require("path")
+const fs = require("fs")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const srcRoot = path.resolve(__dirname, "src")
+const devPath = path.resolve(__dirname, "dev")
+const pageDir = path.resolve(srcRoot, "pages")
+const mainFile = "index.js"
 
 //手动配置文件入口
 function getEntry() {
-  let entryMap = {};
-  debugger;
-  fs.readdirSync(pageDir).forEach((pathname) => {
-    let fullPathName = path.resolve(pageDir, pathname);
-    let stat = fs.statSync(fullPathName);
-    let fileName = path.resolve(fullPathName, mainFile);
-    if (stat.isDirectory && fs.existsSync(fileName)) {
-      entryMap[pathname] = fileName;
-    }
-  });
-  console.log(entryMap);
+  let entryMap = {}
 
-  return entryMap;
-}
-/**
- * 根据entryMap生成HtmlArray,多页面配置
- * @param {Object} entryMap
- */
-function getHtmlArray(entryMap) {
-  let htmlArr = [];
-  Object.keys(entryMap).forEach((key) => {
-    //获取完整路径
-    let fullPathName = path.resolve(pageDir, key);
-    let fileName = path.resolve(fullPathName, `${key}.html`); //模版文件路径
-    if (fs.existsSync(fileName)) {
-      htmlArr.push(
-        new HtmlWebpackPlugin({
-          filename: `${key}.html`,
-          template: fileName,
-          chunks: [key], //配置引入的js文件
-        })
-      );
+  fs.readdirSync(pageDir).forEach((pathname) => {
+    let fullPathName = path.resolve(pageDir, pathname)
+    let stat = fs.statSync(fullPathName)
+    let fileName = path.resolve(fullPathName, mainFile)
+
+    if (stat.isDirectory() && fs.existsSync(fileName)) {
+      entryMap[pathname] = fileName
     }
-  });
-  return htmlArr;
+  })
+
+  return entryMap
 }
-const entryMap = getEntry();
-const htmlArray = getHtmlArray(entryMap);
+function getHtmlArray(entryMap) {
+  let htmlArray = []
+  Object.keys(entryMap).forEach((key) => {
+    let fullPathName = path.resolve(pageDir, key)
+    let fileName = path.resolve(fullPathName, key + ".html")
+
+    if (fs.existsSync(fileName)) {
+      htmlArray.push(
+        new HtmlWebpackPlugin({
+          filename: key + ".html",
+          template: fileName,
+          chunks: ["common", key],
+        })
+      )
+    }
+  })
+  return htmlArray
+}
 
 module.exports = {
   mode: "development",
-  entry: entryMap,
+  entry: {
+    index: "./src/pages/index/index.js",
+    category: "./src/pages/category/index.js",
+    detail: "./src/pages/detail/index.js",
+  },
   output: {
     path: devPath,
-    filename: "[name].min.js",
+    filename: "[name].[contentHash:8].js",
   },
+  devtool: "source-map", //配置sourceMap
   module: {
     rules: [
       {
@@ -79,5 +78,24 @@ module.exports = {
       },
     ],
   },
-  plugins: [].concat(htmlArray),
-};
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/pages/index/index.html",
+      filename: "index.html",
+      // chunks 表示该页面要引用哪些 chunk （即上面的 index 和 other），默认全部引用
+      chunks: ["index"], // 只引用 index.js
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/pages/category/category.html",
+      filename: "category.html",
+      // chunks 表示该页面要引用哪些 chunk （即上面的 index 和 other），默认全部引用
+      chunks: ["category"], // 只引用 index.js
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/pages/detail/detail.html",
+      filename: "detail.html",
+      // chunks 表示该页面要引用哪些 chunk （即上面的 index 和 other），默认全部引用
+      chunks: ["detail"], // 只引用 index.js
+    }),
+  ],
+}
