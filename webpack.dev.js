@@ -43,11 +43,15 @@ function getHtmlArray(entryMap) {
 
 module.exports = {
   mode: "development",
+  devServer: {
+    contentBase: devPath,
+  },
   entry: {
     index: "./src/pages/index/index.js",
     category: "./src/pages/category/index.js",
     detail: "./src/pages/detail/index.js",
   },
+
   output: {
     path: devPath,
     filename: "[name].[contentHash:8].js",
