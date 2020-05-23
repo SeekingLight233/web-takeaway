@@ -1,6 +1,6 @@
-import { ADD_TODO, CHANGE_TAB } from "../actions/actionTypes"
+import { ADD_TODO, CHANGE_TAB } from "../actions/actionTypes";
 
-import { TABKEY } from "../config"
+import { TABKEY } from "../config";
 
 const initState = {
   tabs: [
@@ -18,24 +18,24 @@ const initState = {
     },
   ],
   activeKey: TABKEY.home, //默认进入主页
-}
+};
 
 const changeTab = (state, action) => {
   //取到activeKey
-  let activeKey = action.obj.activeKey
+  let activeKey = action.obj.activeKey;
   //这里并没有触犯不可变值的原则
-  return { ...state, activeKey }
-}
+  return { ...state, activeKey };
+};
 
 const tabReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_TODO:
-      return addTodo(state, action)
+      return addTodo(state, action);
     case CHANGE_TAB:
-      return changeTab(state, action)
+      return changeTab(state, action);
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default tabReducer
+export default tabReducer;
