@@ -70,7 +70,17 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ["style-loader", "css-loader", "sass-loader"],
+        loader: [
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+          {
+            loader: "sass-resources-loader",
+            options: {
+              resources: srcRoot + "/component/common.scss",
+            },
+          },
+        ],
         include: srcRoot,
       },
       {
