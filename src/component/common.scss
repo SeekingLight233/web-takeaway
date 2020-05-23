@@ -1,3 +1,4 @@
+// 不手动用rem单位是为了后期维护时可以得知原先设计稿上的px值
 @function px2rem($px) {
   $rem: 37.5px; //视觉稿基于iphone6
   @return ($px/$rem) + rem;
