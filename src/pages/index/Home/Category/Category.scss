@@ -1,0 +1,15 @@
+.category-content {
+  padding-bottom: px2rem(10px);
+  .category-item {
+    float: left;
+    width: 25%; //每一个元素占25%
+    padding-top: px2rem(14px);
+    font-size: px2rem(13px);
+    display: flex;
+    flex-direction: column;
+    align-items: center; //让每个item横向居中
+  }
+  .item-icon {
+    width: px2rem(47px);
+  }
+}

@@ -3,3 +3,11 @@
   $rem: 37.5px; //视觉稿基于iphone6
   @return ($px/$rem) + rem;
 }
+//清除浮动
+.clearfix::after {
+  content: "";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
