@@ -50,7 +50,45 @@ class ListItem extends React.Component {
     }
     return starjsx
   }
+  /**
+   * @description 渲染月售数量
+   * @param {*} data
+   */
+  renderMonthNum(data) {
+    let num = data.month_sale_num
+    if (num > 999) {
+      return "999+"
+    }
+    return num
+  }
 
+  /**
+   * @description 是否渲染美团专送
+   * @param {*} data
+   */
+  renderMeiTuanFlag(data) {
+    if (data.delivery_type) {
+      return <div className="item-meituan-flag">美团专送</div>
+    }
+    return null
+  }
+  /**
+   * @description 渲染商家活动
+   * @param {*} data
+   */
+  renderOthers(data) {
+    let array = data.discounts2
+    return array.map((item, index) => {
+      return (
+        <div key={"key" + index} className="other-info">
+          <img src={item.icon_url} className="other-tag"></img>
+          <div src="" className="other-content">
+            {item.info}
+          </div>
+        </div>
+      )
+    })
+  }
   render() {
     let data = this.props.itemData
     return (
@@ -62,21 +100,15 @@ class ListItem extends React.Component {
           {/* 清除浮动，防止父元素坍塌 */}
           <div className="item-desc clearfix">
             <div className="item-score">{this.renderScore(data)}</div>
-            <div className="item-count">
-              {[<div key="0">元素1</div>, <div key="1">元素2</div>]}
-            </div>
-            <div className="item-distance">xx</div>
-            <div className="item-time">xx</div>
+            <div className="item-count">月售{this.renderMonthNum(data)}</div>
+            <div className="item-distance">&nbsp;{data.distance}</div>
+            <div className="item-time">{data.mt_delivery_time}&nbsp;|</div>
           </div>
           <div className="item-price">
-            <div className="item-pre-price">xx</div>
+            <div className="item-pre-price">{data.min_price_tip}</div>
+            {this.renderMeiTuanFlag(data)}
           </div>
-          <div className="item-others">
-            <div className="other-info">
-              <img src="" className="other-tag"></img>
-              <div src="" className="other-content"></div>
-            </div>
-          </div>
+          <div className="item-others">{this.renderOthers(data)}</div>
         </div>
       </div>
     )

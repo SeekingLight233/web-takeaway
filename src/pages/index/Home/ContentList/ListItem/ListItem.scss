@@ -65,6 +65,13 @@
   .item-pre-price {
     float: left;
   }
+  .item-meituan-flag {
+    float: right;
+    background-color: #ffd161;
+    color: #000;
+    padding: 3px;
+    border-radius: 3px;
+  }
   .brand {
     position: absolute; //品牌标签要基于整个item进行绝对定位
     left: 1px;
@@ -78,5 +85,24 @@
   }
   .brand-xin {
     background-color: #21c56c;
+  }
+  .item-others {
+    color: #898989;
+    margin-top: 7px;
+    font-size: 12px;
+  }
+  .other-tag {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+  }
+  .other-content {
+    display: inline-block;
+    margin-left: 3px;
+    height: 14px;
+    width: 230px;
+    vertical-align: 3px;
+    //vertical-align可以指定行内元素如何垂直对齐
+    //为正值向上移动
   }
 }
