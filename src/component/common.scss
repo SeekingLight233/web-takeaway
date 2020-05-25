@@ -11,3 +11,20 @@
   height: 0;
   clear: both;
 }
+.scale-1px {
+  position: relative;
+  border: none;
+}
+//通过缩放来解决移动端1px问题
+.scale-1px::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  bottom: 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  //基于初始位置进行缩放
+  -webkit-transform-origin: 0, 0;
+  transform-origin: 0, 0;
+}

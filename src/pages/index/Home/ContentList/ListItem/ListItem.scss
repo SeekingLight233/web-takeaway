@@ -1,0 +1,61 @@
+.item-content {
+  display: flex;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #656565;
+  &:after {
+    background-color: black;
+  }
+  .item-img {
+    width: 86px;
+    height: 65px;
+    border: 1px solid #e4e4e4;
+  }
+  .item-info-content {
+    flex: 1; //撑满剩余距离
+    margin-left: 7px;
+  }
+
+  .item-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-top: 3px;
+  }
+  .item-desc {
+    margin-top: 13px;
+    font-size: 12px;
+    .item-score {
+      float: left;
+    }
+    .item-count {
+      float: left;
+      margin-left: 5px;
+    }
+    .item-distance {
+      float: right;
+    }
+    .item-time {
+      float: right;
+    }
+  }
+  .item-price {
+    margin-top: 10px;
+    font-size: 12px;
+    height: 24px;
+  }
+  .item-pre-price {
+    float: left;
+  }
+  .brand {
+    position: absolute; //品牌标签要基于整个item进行绝对定位
+    left: 1px;
+    top: 16px;
+    font-size: 12px;
+    padding: 2px;
+    color: #fff;
+    background-color: #ffa627;
+  }
+}

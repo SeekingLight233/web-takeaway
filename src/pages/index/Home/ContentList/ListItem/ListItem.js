@@ -12,19 +12,20 @@ class ListItem extends React.Component {
 
   render() {
     return (
-      <div className="item-content">
+      <div className="item-content scale-1px">
         <img className="item-img"></img>
         <div className="brand">品牌</div>
         <div className="item-info-content">
           <p className="item-title">商家名称</p>
-          <div className="item-desc">
+          {/* 清除浮动，防止父元素坍塌 */}
+          <div className="item-desc clearfix">
             <div className="item-score">xxx</div>
             <div className="item-count">xx</div>
             <div className="item-distance">xx</div>
             <div className="item-time">xx</div>
           </div>
           <div className="item-price">
-            <div className="item-pre-price"></div>
+            <div className="item-pre-price">xx</div>
           </div>
           <div className="item-others">
             <div className="other-info">
