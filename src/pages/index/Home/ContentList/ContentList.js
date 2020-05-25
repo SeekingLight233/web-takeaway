@@ -2,6 +2,8 @@ import "./ContentList.scss"
 import React from "react"
 import { connect } from "react-redux"
 import { getListData } from "../../actions/contentListAction"
+
+import ListItem from "./ListItem/ListItem"
 /**
  * @description  附近商家
  */
@@ -18,7 +20,8 @@ class ContentList extends React.Component {
     console.log(this.props)
     let { list } = this.props
     return list.map((item, index) => {
-      return <div key={index}>{item.name}</div>
+      // 将每一个item上的数据通过组件传递进去
+      return <ListItem key={index} itemData={item}></ListItem>
     })
   }
 
