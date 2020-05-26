@@ -2,7 +2,8 @@ import "./ContentList.scss"
 import React from "react"
 import { connect } from "react-redux"
 import { getListData } from "../../actions/contentListAction"
-import Loading from "component/Loading/Loading"
+
+import ScrollView from "component/ScrollView/ScrollView"
 
 import ListItem from "./ListItem/ListItem"
 /**
@@ -24,34 +25,16 @@ class ContentList extends React.Component {
   /**
    * @description 滚动加载
    */
-  onLoadPage() {
-    let clientHeight = document.documentElement.clientHeight
-    //scrollHeight是元素高度,在懒加载之前是固定的
-    let scrollHeight = document.body.scrollHeight
-    let scrollTop = document.documentElement.scrollTop //scrollTop为顶部距离
-
-    let proLoadDis = 30
-    //当滚动的距离+设备高度 = 元素整体高度时，说明触底了
-    if (scrollTop + clientHeight >= scrollHeight - proLoadDis) {
-      this.page++
-      if (this.page > 3) {
-        //加载超过三页不请求数据
-        this.setState({ isend: true, loadingText: "加载完成" })
-      } else {
-        this.fetchData(this.page)
-      }
+  onLoadPage = () => {
+    this.page++
+    if (this.page > 3) {
+      //加载超过三页不请求数据
+      this.setState({ isend: true })
+    } else {
+      this.fetchData(this.page)
     }
   }
 
-  //列表渲染前对滚动进行监听
-  componentWillMount() {
-    //添加事件监听时千万不要忘了绑定this指向
-    window.addEventListener("scroll", this.onLoadPage.bind(this))
-  }
-  //手动销毁自定义事件
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.onLoadPage.bind(this))
-  }
   renderItems() {
     let { list } = this.props
     return list.map((item, index) => {
@@ -68,8 +51,9 @@ class ContentList extends React.Component {
           <span>附近商家</span>
           <span className="title-line"></span>
         </h4>
-        {this.renderItems()}
-        <Loading isend={this.state.isend}></Loading>
+        <ScrollView loadCallback={this.onLoadPage} isend={this.state.isend}>
+          {this.renderItems()}
+        </ScrollView>
       </div>
     )
   }

@@ -4,7 +4,6 @@ const initState = {
   list: [],
 }
 const getOrderData = (state, action) => {
-  console.log(action)
   if (action.currentPage === 0) {
     return { ...state, list: action.obj.data.digestlist }
   } else {

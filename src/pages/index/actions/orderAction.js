@@ -6,7 +6,6 @@ export const getOrderData = (page) => (dispatch) => {
     method: "get",
     url: "/json/orders.json",
   }).then((res) => {
-    console.log(res.data)
     dispatch({
       type: ORDER_DATA,
       currentPage: page,
