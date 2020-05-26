@@ -21,7 +21,9 @@ class ContentList extends React.Component {
   fetchData(page) {
     this.props.dispatch(getListData(page))
   }
-
+  /**
+   * @description 滚动加载
+   */
   onLoadPage() {
     let clientHeight = document.documentElement.clientHeight
     //scrollHeight是元素高度,在懒加载之前是固定的

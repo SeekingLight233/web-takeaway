@@ -2,6 +2,7 @@ import React from "react"
 import "./Order.scss"
 import { connect } from "react-redux"
 import { getOrderData } from "../actions/orderAction"
+import Listitem from "./ListItem/Listitem"
 /**
  * @description Order页面
  */
@@ -18,7 +19,7 @@ class Order extends React.Component {
   renderList() {
     let { list } = this.props
     return list.map((item, index) => {
-      return <div key={index}>{item.poi_name}</div>
+      return <Listitem itemData={item} key={index}></Listitem>
     })
   }
   render() {
