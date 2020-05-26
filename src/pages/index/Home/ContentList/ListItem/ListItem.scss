@@ -1,36 +1,36 @@
 .item-content {
   display: flex;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
+  padding-top: px2rem(15px);
+  padding-bottom: px2rem(15px);
+  margin-left: px2rem(10px);
+  margin-right: px2rem(10px);
   color: #656565;
   &:after {
     background-color: black;
   }
   .item-img {
-    width: 86px;
-    height: 65px;
-    border: 1px solid #e4e4e4;
+    width: px2rem(86px);
+    height: px2rem(65px);
+    border: px2rem(1px) solid #e4e4e4;
   }
   .item-info-content {
     flex: 1; //撑满剩余距离
-    margin-left: 7px;
+    margin-left: px2rem(7px);
   }
 
   .item-title {
-    font-size: 16px;
+    font-size: px2rem(16px);
     font-weight: 500;
     color: #333;
-    margin-top: 3px;
+    margin-top: px2rem(3px);
   }
   .item-desc {
-    margin-top: 13px;
-    font-size: 12px;
+    margin-top: px2rem(13px);
+    font-size: px2rem(12px);
 
     .star {
-      width: 10px;
-      height: 10px;
+      width: px2rem(10px);
+      height: px2rem(10px);
       float: left;
       background-size: cover;
     }
@@ -48,7 +48,7 @@
     }
     .item-count {
       float: left;
-      margin-left: 5px;
+      margin-left: px2rem(5px);
     }
     .item-distance {
       float: right;
@@ -58,9 +58,9 @@
     }
   }
   .item-price {
-    margin-top: 10px;
-    font-size: 12px;
-    height: 24px;
+    margin-top: px2rem(10px);
+    font-size: px2rem(12px);
+    height: px2rem(24px);
   }
   .item-pre-price {
     float: left;
@@ -69,15 +69,15 @@
     float: right;
     background-color: #ffd161;
     color: #000;
-    padding: 3px;
-    border-radius: 3px;
+    padding: px2rem(3px);
+    border-radius: px2rem(3px);
   }
   .brand {
     position: absolute; //品牌标签要基于整个item进行绝对定位
-    left: 1px;
-    top: 16px;
-    font-size: 12px;
-    padding: 2px;
+    left: px2rem(1px);
+    top: px2rem(16px);
+    font-size: px2rem(12px);
+    padding: px2rem(2px);
     color: #fff;
   }
   .brand-pin {
@@ -88,20 +88,20 @@
   }
   .item-others {
     color: #898989;
-    margin-top: 7px;
-    font-size: 12px;
+    margin-top: px2rem(7px);
+    font-size: px2rem(12px);
   }
   .other-tag {
-    width: 14px;
-    height: 14px;
+    width: px2rem(14px);
+    height: px2rem(14px);
     display: inline-block;
   }
   .other-content {
     display: inline-block;
-    margin-left: 3px;
-    height: 14px;
-    width: 230px;
-    vertical-align: 3px;
+    margin-left: px2rem(3px);
+    height: px2rem(14px);
+    width: px2rem(230px);
+    vertical-align: px2rem(3px);
     //vertical-align可以指定行内元素如何垂直对齐
     //为正值向上移动
   }
