@@ -1,0 +1,111 @@
+.my {
+  .header {
+    width: 100%;
+    height: px2rem(160px);
+    background-image: url("./img/header.png");
+    background-size: cover;
+    //通过为父元素设置bfc来解决margin穿透问题
+    overflow: hidden;
+  }
+  .avatar {
+    width: px2rem(72px);
+    height: px2rem(72px);
+    margin: 0 auto;
+    display: block; //图片默认是inline
+    margin-top: px2rem(25px);
+    border: px2rem(3px) solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+  }
+  .nickname {
+    color: #333;
+    font-size: px2rem(16px);
+    text-align: center;
+    margin-top: px2rem(15px);
+  }
+
+  .items {
+    padding-inline-start: 0;
+    border-bottom: px2rem(10px) solid #eee;
+    background-color: #fff;
+    margin-top: 0;
+    margin-bottom: px2rem(3px);
+
+    li {
+      list-style: none;
+      height: px2rem(45px);
+      font-size: px2rem(14px);
+      line-height: px2rem(45px); //行高等于高度，文字居中
+      position: relative;
+      padding-left: px2rem(26px);
+      margin-left: px2rem(15px);
+      border-bottom: px2rem(1px) solid #e4e4e4;
+      &:last-child {
+        //li中的最后一个元素取消边框
+        border: none;
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        width: px2rem(16px);
+        height: px2rem(16px);
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        background-size: cover;
+        left: px2rem(1px);
+      }
+      &::after {
+        //实现箭头的另一种方法
+        position: absolute;
+        content: ">";
+        display: block;
+        width: px2rem(16px);
+        height: px2rem(16px);
+        top: 0;
+        right: px2rem(9px);
+        color: #aaa;
+      }
+    }
+    .address {
+      &::before {
+        background-image: url("./img/address.png");
+      }
+    }
+    .money {
+      &::before {
+        background-image: url("./img/money.png");
+      }
+    }
+    .email {
+      &::before {
+        background-image: url("./img/email.png");
+      }
+    }
+    .question {
+      &::before {
+        background-image: url("./img/question.png");
+      }
+    }
+  }
+  .tel {
+    font-size: px2rem(15px);
+    color: #ffb000;
+    text-align: center;
+    height: px2rem(46px);
+    line-height: px2rem(46px);
+    background-color: #fff;
+  }
+  .time {
+    font-size: px2rem(14px);
+    color: #ffb000;
+    text-align: center;
+    margin-top: px2rem(13px);
+    color: #999;
+  }
+  .content {
+    min-height: px2rem(507px);
+    background-color: #eee;
+  }
+}

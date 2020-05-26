@@ -1,5 +1,5 @@
 import React from "react"
-
+import "./My.scss"
 class My extends React.Component {
   render() {
     return (
@@ -21,7 +21,7 @@ class My extends React.Component {
             <li className="question">意见反馈</li>
           </ul>
           <p className="tel">客服电话: &nbsp;101-097-77</p>
-          <p className="tel">服务时间: &nbsp;9:00-23:00</p>
+          <p className="time">服务时间: &nbsp;9:00-23:00</p>
         </div>
       </div>
     )
