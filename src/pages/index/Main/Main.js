@@ -1,5 +1,6 @@
 import React from "react"
 
+import { Route, withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 import { addTodo } from "../actions/tabAction"
 import BottomBar from "../BottomBar/BottomBar"
@@ -14,9 +15,9 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-        {/* <Home></Home> */}
-        {/* <Order></Order> */}
-        <My></My>
+        <Route path="/home" component={Home}></Route>
+        <Route path="/order" component={Order}></Route>
+        <Route path="/my" component={My}></Route>
         <BottomBar></BottomBar>
       </div>
     )
@@ -24,7 +25,9 @@ class Main extends React.Component {
 }
 //通过connect将store绑定到当前组件的属性上
 //这样 就不用手动订阅了
-export default connect((state) => ({
-  //注入属性
-  num: state.tabReducer.num,
-}))(Main)
+export default withRouter(
+  connect((state) => ({
+    //注入属性
+    num: state.tabReducer.num,
+  }))(Main)
+)
