@@ -17,7 +17,7 @@ const initState = {
       key: TABKEY.my,
     },
   ],
-  activeKey: TABKEY.order, //默认进入主页
+  activeKey: TABKEY.my, //默认进入主页
 }
 
 const changeTab = (state, action) => {

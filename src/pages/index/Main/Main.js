@@ -5,6 +5,7 @@ import { addTodo } from "../actions/tabAction"
 import BottomBar from "../BottomBar/BottomBar"
 import Home from "../Home/Home"
 import Order from "../Order/Order"
+import My from "../My/My"
 
 class Main extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class Main extends React.Component {
     return (
       <div>
         {/* <Home></Home> */}
-        <Order></Order>
+        {/* <Order></Order> */}
+        <My></My>
         <BottomBar></BottomBar>
       </div>
     )
