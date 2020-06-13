@@ -1,6 +1,9 @@
 import tabReducer from "./tabReducer"
 import { combineReducers } from "redux"
+import headerReducer from "./headerReducer"
 
-const reducers = combineReducers({})
+const reducers = combineReducers({
+  headerReducer,
+})
 
 export default reducers
