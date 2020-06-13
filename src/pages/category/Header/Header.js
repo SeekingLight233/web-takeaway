@@ -1,13 +1,20 @@
 import React from "react"
-
+import "./Header.scss"
 import { connect } from "react-redux"
+import { changeTab } from "../actions/headerAction"
 
 class Header extends React.Component {
   constructor(props) {
     super(props)
   }
 
-  changeTab() {}
+  changeTab(key) {
+    this.props.dispatch(
+      changeTab({
+        activeKey: key,
+      })
+    )
+  }
   /**
    * 渲染顶部tab栏
    */
@@ -25,7 +32,7 @@ class Header extends React.Component {
           className={cls}
           key={item.key}
           onClick={() => {
-            this.changeTab()
+            this.changeTab(item.key)
           }}
         >
           {item.text}
