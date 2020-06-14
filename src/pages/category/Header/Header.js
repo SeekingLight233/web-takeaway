@@ -20,9 +20,15 @@ class Header extends React.Component {
    * @param {} key 
    */
   changeTab(key) {
+    let closePanel = false;
+    //控制panel面板的显示与隐藏
+    if (this.props.activeKey === key && !this.props.closePanel) {
+      closePanel = true
+    }
     this.props.dispatch(
       changeTab({
         activeKey: key,
+        closePanel
       })
     )
   }
@@ -35,7 +41,7 @@ class Header extends React.Component {
     for (let key in tabs) {
       let item = tabs[key]
       let cls = item.key + " item"
-      if (item.key === this.props.activeKey) {
+      if (item.key === this.props.activeKey && !this.props.closePanel) {
         cls += " current"
       }
       array.push(
@@ -67,7 +73,7 @@ class Header extends React.Component {
     return cateList.map((item, index) => {
       return <li key={"key" + index} className="cate-item">
         <p className="item-title">{item.name}<span className="item-count">{item.quantity}</span></p>
-        <div className="item-content">{this.renderCateInnerContent(item, cateList)}</div>
+        <div className="item-content clearfix">{this.renderCateInnerContent(item, cateList)}</div>
       </li>
     })
   }
@@ -147,18 +153,24 @@ class Header extends React.Component {
           {this.renderTypeContent()}
         </ul>)
       } else {
-        // array.push(<ul key={item.key} className={cls}>
-        //   {this.renderFilterContent()}
-        // </ul>)
+        array.push(<ul key={item.key} className={cls}>
+          {this.renderFilterContent()}
+        </ul>)
       }
     }
     return array;
   }
   render() {
+    let cls = 'panel';
+    if (!this.props.closePanel) {
+      cls += ' show';
+    } else {
+      cls = 'panel'
+    }
     return (
       <div className="header">
         <div className="header-top">{this.renderTabs()}</div>
-        <div className="panel">
+        <div className={cls}>
           <div className="panel-inner">{this.renderContent()}</div>
         </div>
       </div>
@@ -171,5 +183,6 @@ export default connect((state) => ({
   //注入属性
   tabs: state.headerReducer.tabs,
   activeKey: state.headerReducer.activeKey,
-  filterData: state.headerReducer.filterData
+  filterData: state.headerReducer.filterData,
+  closePanel: state.headerReducer.closePanel
 }))(Header)

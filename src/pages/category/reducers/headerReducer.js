@@ -20,11 +20,12 @@ tabs[TABKEY.filter] = {
 const initState = {
   tabs,
   activeKey: TABKEY.cate,
-  filterData: {}
+  filterData: {},
+  closePanel: true
 }
 
 const changeTab = (state, action) => {
-  return { ...state, activeKey: action.obj.activeKey }
+  return { ...state, activeKey: action.obj.activeKey, closePanel: action.obj.closePanel }
 }
 
 const getFilterData = (state, action) => {
