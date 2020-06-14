@@ -52,7 +52,7 @@ class Header extends React.Component {
     }
     return array
   }
-
+  // 渲染内层全部分类数据
   renderCateInnerContent(items, cateList) {
     return items.sub_category_list.map((item, index) => {
       let cls = item.active ? 'cate-box-inner active' : 'cate-box-inner'
@@ -61,7 +61,7 @@ class Header extends React.Component {
       </div>
     })
   }
-
+  //渲染外层全部分类数据
   renderCateContent() {
     let cateList = this.props.filterData.category_filter_list || [];
     return cateList.map((item, index) => {
@@ -70,6 +70,61 @@ class Header extends React.Component {
         <div className="item-content">{this.renderCateInnerContent(item, cateList)}</div>
       </li>
     })
+  }
+
+  //筛选栏目 > 每一组中的每个元素
+  renderFilterInnerContent(items, filterList) {
+    return items.map((item, index) => {
+      let cls = item.icon ? "cate-box-inner has-icon" : "cate-box-inner";
+      if (item.active) {
+        cls += " active";
+      }
+      return (
+        <div
+          onClick={() => this.changeDoFilter(item, TABKEY.filter, filterList)}
+          key={index}
+          className="cate-box"
+        >
+          <div className={cls}>
+            {item.icon ? <img src={item.icon} /> : null}
+            {item.name}
+          </div>
+        </div>
+      );
+    });
+  }
+
+  //渲染“筛选”栏目下的每一组
+  renderFilterContent() {
+    let filterList = this.props.filterData.activity_filter_list || [];
+    return filterList.map((item, index) => {
+      return (
+        <li key={index} className="filter-item">
+          <p className="filter-title">{item.group_title}</p>
+          <div className="item-content clearfix">
+            {this.renderFilterInnerContent(item.items, filterList)}
+          </div>
+        </li>
+      );
+    });
+  }
+
+  // 渲染 销量最高、综合排序... 列表
+  renderTypeContent() {
+    let typeList = this.props.filterData.sort_type_list || [];
+    return typeList.map((item, index) => {
+      let cls = item.active ? "type-item active" : "type-item";
+
+      return (
+        <li
+          onClick={() => this.changeDoFilter(item, TABKEY.type, typeList)}
+          key={index}
+          className={cls}
+        >
+          {item.name}
+        </li>
+      );
+    });
   }
   /**
    * 渲染过滤面板
@@ -88,9 +143,9 @@ class Header extends React.Component {
           {this.renderCateContent()}
         </ul>)
       } else if (item.key === TABKEY.type) {
-        // array.push(<ul key={item.key} className={cls}>
-        //   {this.renderTypeContent()}
-        // </ul>)
+        array.push(<ul key={item.key} className={cls}>
+          {this.renderTypeContent()}
+        </ul>)
       } else {
         // array.push(<ul key={item.key} className={cls}>
         //   {this.renderFilterContent()}
