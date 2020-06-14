@@ -1,5 +1,5 @@
 import { TABKEY } from "../config"
-import { CHANGE_TAB } from "../actions/actionTypes"
+import { CHANGE_TAB, GET_FILTER_DATA } from "../actions/actionTypes"
 let tabs = {}
 tabs[TABKEY.cate] = {
   key: TABKEY.cate,
@@ -16,20 +16,27 @@ tabs[TABKEY.filter] = {
   text: "筛选",
   obj: {},
 }
-
+// 初始化state
 const initState = {
   tabs,
   activeKey: TABKEY.cate,
+  filterData: {}
 }
 
 const changeTab = (state, action) => {
   return { ...state, activeKey: action.obj.activeKey }
 }
 
+const getFilterData = (state, action) => {
+  return { ...state, filterData: action.obj.data }
+}
+
 const headerReducer = (state = initState, action) => {
   switch (action.type) {
     case CHANGE_TAB:
       return changeTab(state, action)
+    case GET_FILTER_DATA:
+      return getFilterData(state, action)
     default:
       return state
   }

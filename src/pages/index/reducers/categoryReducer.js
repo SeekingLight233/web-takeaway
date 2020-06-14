@@ -3,7 +3,6 @@ import { HEAD_DATA } from "../actions/actionTypes";
 const initState = {
   items: [],
 };
-//将数据
 const getCategory = (state, action) => {
   return { ...state, items: action.obj.data.primary_filter };
 };
