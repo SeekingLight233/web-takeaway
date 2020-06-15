@@ -2,7 +2,7 @@ import React from "react"
 import "./Header.scss"
 import { connect } from "react-redux"
 import { TABKEY } from "../config"
-import { changeTab, getFilterData } from "../actions/headerAction"
+import { changeTab, getFilterData, changeFilter } from "../actions/headerAction"
 
 class Header extends React.Component {
   constructor(props) {
@@ -15,6 +15,50 @@ class Header extends React.Component {
       getFilterData()
     )
   }
+  /**
+   * 重置其他item的active状态,将每一个Item上的active都设置为false
+   */
+  revertActive(key, dataList) {
+    if (key === TABKEY.cate) {
+      for (let i = 0; i < dataList.length; i++) {
+        for (let j = 0; j < dataList[i].sub_category_list.length; j++) {
+          dataList[i].sub_category_list[j].active = false;
+        }
+      }
+    } else if (key === TABKEY.type) {
+      for (let x = 0; x < dataList.length; x++) {
+        dataList[x].active = false;
+      }
+    } else {
+      for (let k = 0; k < dataList.length; k++) {
+        for (let o = 0; o < dataList[k].items.length; o++) {
+          dataList[k].items[o].active = false;
+        }
+      }
+    }
+  }
+  /**
+   * 更改顶部Item的状态，同时对数据进行过滤
+   * 由于顶部的这些“状态”是从store中渲染过来的，因此要重新定义一个action来修改store中的状态
+   */
+  changeDoFilter(item, key, dataList) {
+    this.revertActive(key, dataList);//重置active状态
+    item.active = true;//在这个地方为item添加一个active的状态
+    this.props.dispatch(
+      changeFilter({
+        item,
+        key,
+      })
+    );
+
+    // this.props.dispatch(
+    //   getListData({
+    //     filterData: item,
+    //     toFirstPage: true,
+    //   })
+    // );
+  }
+
   /**
    * @description 点击切换tab
    * @param {} key 
@@ -62,7 +106,7 @@ class Header extends React.Component {
   renderCateInnerContent(items, cateList) {
     return items.sub_category_list.map((item, index) => {
       let cls = item.active ? 'cate-box-inner active' : 'cate-box-inner'
-      return <div className="cate-box" key={index}>
+      return <div onClick={() => this.changeDoFilter(item, TABKEY.cate, cateList)} className="cate-box" key={index}>
         <div className={cls}>{item.name}({item.quantity})</div>
       </div>
     })
