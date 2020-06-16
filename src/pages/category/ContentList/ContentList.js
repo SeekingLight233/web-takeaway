@@ -1,44 +1,41 @@
 import "./ContentList.scss";
+
 import React from "react";
 import { connect } from "react-redux";
-import { getListData } from "../actions/contentListAction";
+
+import ListItem from "component/ListItem/ListItem";
 
 import ScrollView from "component/ScrollView/ScrollView";
 
-import ListItem from "component/ListItem/ListItem";
+import { getListData } from "../actions/contentListAction";
+
 /**
- * @description  附近商家
+ * @constructor <ContentList />
+ * @description 附近商家列表
  */
+
 class ContentList extends React.Component {
   constructor(props) {
     super(props);
-    ///请求第一屏数据
-    this.page = 0;
-    this.fetchData(this.page);
-    this.state = {
-      isend: false, //页面是否允许滚动
-    };
+
+    // 请求第一屏数据
+    this.fetchData();
   }
-  fetchData(page) {
-    this.props.dispatch(getListData(page));
-  }
-  /**
-   * @description 滚动加载
-   */
-  onLoadPage = () => {
-    this.page++;
-    if (this.page > 3) {
-      //加载超过三页不请求数据
-      this.setState({ isend: true });
-    } else {
-      this.fetchData(this.page);
+
+  onLoadPage() {
+    // 最多滚动3页3次
+    if (this.props.page <= 3) {
+      this.fetchData();
     }
-  };
+  }
+
+  fetchData() {
+    this.props.dispatch(getListData({}));
+  }
 
   renderItems() {
-    let { list } = this.props;
+    let list = this.props.list;
     return list.map((item, index) => {
-      // 将每一个item上的数据通过组件传递进去
       return <ListItem key={index} itemData={item}></ListItem>;
     });
   }
@@ -46,7 +43,10 @@ class ContentList extends React.Component {
   render() {
     return (
       <div className="list-content">
-        <ScrollView loadCallback={this.onLoadPage} isend={this.state.isend}>
+        <ScrollView
+          loadCallback={this.onLoadPage.bind(this)}
+          isend={this.props.isend}
+        >
           {this.renderItems()}
         </ScrollView>
       </div>
@@ -55,4 +55,6 @@ class ContentList extends React.Component {
 }
 export default connect((state) => ({
   list: state.contentListReducer.items,
+  page: state.contentListReducer.page,
+  isend: state.contentListReducer.isend,
 }))(ContentList);

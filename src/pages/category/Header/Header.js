@@ -1,19 +1,22 @@
-import React from "react"
-import "./Header.scss"
-import { connect } from "react-redux"
-import { TABKEY } from "../config"
-import { changeTab, getFilterData, changeFilter } from "../actions/headerAction"
+import React from "react";
+import "./Header.scss";
+import { connect } from "react-redux";
+import { TABKEY } from "../config";
+import {
+  changeTab,
+  getFilterData,
+  changeFilter,
+} from "../actions/headerAction";
+import { getListData } from "../actions/contentListAction";
 
 class Header extends React.Component {
   constructor(props) {
-    super(props)
-    this.fetchData()
+    super(props);
+    this.fetchData();
   }
 
   fetchData() {
-    this.props.dispatch(
-      getFilterData()
-    )
+    this.props.dispatch(getFilterData());
   }
   /**
    * 重置其他item的active状态,将每一个Item上的active都设置为false
@@ -42,8 +45,8 @@ class Header extends React.Component {
    * 由于顶部的这些“状态”是从store中渲染过来的，因此要重新定义一个action来修改store中的状态
    */
   changeDoFilter(item, key, dataList) {
-    this.revertActive(key, dataList);//重置active状态
-    item.active = true;//在这个地方为item添加一个active的状态
+    this.revertActive(key, dataList); //重置active状态
+    item.active = true; //在这个地方为item添加一个active的状态
     this.props.dispatch(
       changeFilter({
         item,
@@ -51,75 +54,91 @@ class Header extends React.Component {
       })
     );
 
-    // this.props.dispatch(
-    //   getListData({
-    //     filterData: item,
-    //     toFirstPage: true,
-    //   })
-    // );
+    //更新ContentList中的数据
+    this.props.dispatch(
+      getListData({
+        filterData: item,
+        toFirstPage: true, //回到初始位置
+      })
+    );
   }
 
   /**
    * @description 点击切换tab
-   * @param {} key 
+   * @param {} key
    */
   changeTab(key) {
     let closePanel = false;
     //控制panel面板的显示与隐藏
     if (this.props.activeKey === key && !this.props.closePanel) {
-      closePanel = true
+      closePanel = true;
     }
     this.props.dispatch(
       changeTab({
         activeKey: key,
-        closePanel
+        closePanel,
       })
-    )
+    );
   }
   /**
    * 渲染顶部tab栏
    */
   renderTabs() {
-    let tabs = this.props.tabs
-    let array = []
+    let tabs = this.props.tabs;
+    let array = [];
     for (let key in tabs) {
-      let item = tabs[key]
-      let cls = item.key + " item"
+      let item = tabs[key];
+      let cls = item.key + " item";
       if (item.key === this.props.activeKey && !this.props.closePanel) {
-        cls += " current"
+        cls += " current";
       }
       array.push(
         <div
           className={cls}
           key={item.key}
           onClick={() => {
-            this.changeTab(item.key)
+            this.changeTab(item.key);
           }}
         >
           {item.text}
         </div>
-      )
+      );
     }
-    return array
+    return array;
   }
   // 渲染内层全部分类数据
   renderCateInnerContent(items, cateList) {
     return items.sub_category_list.map((item, index) => {
-      let cls = item.active ? 'cate-box-inner active' : 'cate-box-inner'
-      return <div onClick={() => this.changeDoFilter(item, TABKEY.cate, cateList)} className="cate-box" key={index}>
-        <div className={cls}>{item.name}({item.quantity})</div>
-      </div>
-    })
+      let cls = item.active ? "cate-box-inner active" : "cate-box-inner";
+      return (
+        <div
+          onClick={() => this.changeDoFilter(item, TABKEY.cate, cateList)}
+          className="cate-box"
+          key={index}
+        >
+          <div className={cls}>
+            {item.name}({item.quantity})
+          </div>
+        </div>
+      );
+    });
   }
   //渲染外层全部分类数据
   renderCateContent() {
     let cateList = this.props.filterData.category_filter_list || [];
     return cateList.map((item, index) => {
-      return <li key={"key" + index} className="cate-item">
-        <p className="item-title">{item.name}<span className="item-count">{item.quantity}</span></p>
-        <div className="item-content clearfix">{this.renderCateInnerContent(item, cateList)}</div>
-      </li>
-    })
+      return (
+        <li key={"key" + index} className="cate-item">
+          <p className="item-title">
+            {item.name}
+            <span className="item-count">{item.quantity}</span>
+          </p>
+          <div className="item-content clearfix">
+            {this.renderCateInnerContent(item, cateList)}
+          </div>
+        </li>
+      );
+    });
   }
 
   //筛选栏目 > 每一组中的每个元素
@@ -184,32 +203,38 @@ class Header extends React.Component {
     let array = [];
     for (let key in tabs) {
       let item = tabs[key];
-      let cls = item.key + '-panel';
+      let cls = item.key + "-panel";
       if (item.key === activeKey) {
-        cls += ' current';
+        cls += " current";
       }
       if (item.key === TABKEY.cate) {
-        array.push(<ul key={item.key} className={cls}>
-          {this.renderCateContent()}
-        </ul>)
+        array.push(
+          <ul key={item.key} className={cls}>
+            {this.renderCateContent()}
+          </ul>
+        );
       } else if (item.key === TABKEY.type) {
-        array.push(<ul key={item.key} className={cls}>
-          {this.renderTypeContent()}
-        </ul>)
+        array.push(
+          <ul key={item.key} className={cls}>
+            {this.renderTypeContent()}
+          </ul>
+        );
       } else {
-        array.push(<ul key={item.key} className={cls}>
-          {this.renderFilterContent()}
-        </ul>)
+        array.push(
+          <ul key={item.key} className={cls}>
+            {this.renderFilterContent()}
+          </ul>
+        );
       }
     }
     return array;
   }
   render() {
-    let cls = 'panel';
+    let cls = "panel";
     if (!this.props.closePanel) {
-      cls += ' show';
+      cls += " show";
     } else {
-      cls = 'panel'
+      cls = "panel";
     }
     return (
       <div className="header">
@@ -218,7 +243,7 @@ class Header extends React.Component {
           <div className="panel-inner">{this.renderContent()}</div>
         </div>
       </div>
-    )
+    );
   }
 }
 //通过connect将store绑定到当前组件的属性上
@@ -228,5 +253,5 @@ export default connect((state) => ({
   tabs: state.headerReducer.tabs,
   activeKey: state.headerReducer.activeKey,
   filterData: state.headerReducer.filterData,
-  closePanel: state.headerReducer.closePanel
-}))(Header)
+  closePanel: state.headerReducer.closePanel,
+}))(Header);
