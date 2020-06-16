@@ -1,7 +1,7 @@
 import "./ContentList.scss";
 import React from "react";
 import { connect } from "react-redux";
-import { getListData } from "../../actions/contentListAction";
+import { getListData } from "../actions/contentListAction";
 
 import ScrollView from "component/ScrollView/ScrollView";
 
@@ -46,11 +46,6 @@ class ContentList extends React.Component {
   render() {
     return (
       <div className="list-content">
-        <h4 className="list-title">
-          <span className="title-line"></span>
-          <span>附近商家</span>
-          <span className="title-line"></span>
-        </h4>
         <ScrollView loadCallback={this.onLoadPage} isend={this.state.isend}>
           {this.renderItems()}
         </ScrollView>

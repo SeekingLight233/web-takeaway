@@ -1,22 +1,22 @@
-import "./ListItem.scss"
-import React from "react"
-import { connect } from "react-redux"
+import "./ListItem.scss";
+import React from "react";
+import { connect } from "react-redux";
 // import { getListData } from "../../actions/contentListAction"
 /**
  * @description  列表单个组件
  */
 class ListItem extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
   /**
    * @description 对品牌和新到标签进行条件渲染
    */
   renderBrand(data) {
     if (data.brand_type) {
-      return <div className="brand brand-pin">品牌</div>
+      return <div className="brand brand-pin">品牌</div>;
     } else {
-      return <div className="brand brand-xin">新店</div>
+      return <div className="brand brand-xin">新店</div>;
     }
   }
 
@@ -25,41 +25,41 @@ class ListItem extends React.Component {
    * @param {*} data
    */
   renderScore(data) {
-    let wm_poi_score = data.wm_poi_score || ""
+    let wm_poi_score = data.wm_poi_score || "";
     //传进来的是number类型
-    let score = wm_poi_score.toString()
-    let scoreArray = score.split(".")
-    let fullstar = parseInt(scoreArray[0]) //满星的个数
+    let score = wm_poi_score.toString();
+    let scoreArray = score.split(".");
+    let fullstar = parseInt(scoreArray[0]); //满星的个数
     //对半颗星进行四舍五入
-    let halfstar = parseInt(scoreArray[1] >= 5 ? 1 : 0)
-    let nullstar = 5 - fullstar - halfstar
+    let halfstar = parseInt(scoreArray[1] >= 5 ? 1 : 0);
+    let nullstar = 5 - fullstar - halfstar;
 
-    let starjsx = []
+    let starjsx = [];
     for (let i = 0; i < fullstar; i++) {
-      starjsx.push(<div key={i + "full"} className="star fullstar"></div>)
+      starjsx.push(<div key={i + "full"} className="star fullstar"></div>);
     }
     if (halfstar) {
       for (let j = 0; j < halfstar; j++) {
-        starjsx.push(<div key={j + "half"} className="star halfstar"></div>)
+        starjsx.push(<div key={j + "half"} className="star halfstar"></div>);
       }
     }
     if (nullstar) {
       for (let k = 0; k < nullstar; k++) {
-        starjsx.push(<div key={k + "null"} className="star nullstar"></div>)
+        starjsx.push(<div key={k + "null"} className="star nullstar"></div>);
       }
     }
-    return starjsx
+    return starjsx;
   }
   /**
    * @description 渲染月售数量
    * @param {*} data
    */
   renderMonthNum(data) {
-    let num = data.month_sale_num
+    let num = data.month_sale_num;
     if (num > 999) {
-      return "999+"
+      return "999+";
     }
-    return num
+    return num;
   }
 
   /**
@@ -68,16 +68,16 @@ class ListItem extends React.Component {
    */
   renderMeiTuanFlag(data) {
     if (data.delivery_type) {
-      return <div className="item-meituan-flag">美团专送</div>
+      return <div className="item-meituan-flag">美团专送</div>;
     }
-    return null
+    return null;
   }
   /**
    * @description 渲染商家活动
    * @param {*} data
    */
   renderOthers(data) {
-    let array = data.discounts2
+    let array = data.discounts2;
     return array.map((item, index) => {
       return (
         <div key={"key" + index} className="other-info">
@@ -86,13 +86,13 @@ class ListItem extends React.Component {
             {item.info}
           </div>
         </div>
-      )
-    })
+      );
+    });
   }
   render() {
-    let data = this.props.itemData
+    let data = this.props.itemData;
     return (
-      <div className="item-content scale-1px">
+      <div className="r-item-content scale-1px">
         <img className="item-img" src={data.pic_url}></img>
         {this.renderBrand(data)}
         <div className="item-info-content">
@@ -111,9 +111,9 @@ class ListItem extends React.Component {
           <div className="item-others">{this.renderOthers(data)}</div>
         </div>
       </div>
-    )
+    );
   }
 }
 export default connect((state) => ({
   //   list: state.contentListReducer.items,
-}))(ListItem)
+}))(ListItem);
