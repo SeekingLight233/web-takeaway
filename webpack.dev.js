@@ -1,33 +1,33 @@
-const path = require("path")
-const fs = require("fs")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const srcRoot = path.resolve(__dirname, "src")
-const devPath = path.resolve(__dirname, "dev")
-const pageDir = path.resolve(srcRoot, "pages")
-const mainFile = "index.js"
-const webpack = require("webpack")
+const path = require("path");
+const fs = require("fs");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const srcRoot = path.resolve(__dirname, "src");
+const devPath = path.resolve(__dirname, "dev");
+const pageDir = path.resolve(srcRoot, "pages");
+const mainFile = "index.js";
+const webpack = require("webpack");
 
 //手动配置文件入口
 function getEntry() {
-  let entryMap = {}
+  let entryMap = {};
 
   fs.readdirSync(pageDir).forEach((pathname) => {
-    let fullPathName = path.resolve(pageDir, pathname)
-    let stat = fs.statSync(fullPathName)
-    let fileName = path.resolve(fullPathName, mainFile)
+    let fullPathName = path.resolve(pageDir, pathname);
+    let stat = fs.statSync(fullPathName);
+    let fileName = path.resolve(fullPathName, mainFile);
 
     if (stat.isDirectory() && fs.existsSync(fileName)) {
-      entryMap[pathname] = fileName
+      entryMap[pathname] = fileName;
     }
-  })
+  });
 
-  return entryMap
+  return entryMap;
 }
 function getHtmlArray(entryMap) {
-  let htmlArray = []
+  let htmlArray = [];
   Object.keys(entryMap).forEach((key) => {
-    let fullPathName = path.resolve(pageDir, key)
-    let fileName = path.resolve(fullPathName, key + ".html")
+    let fullPathName = path.resolve(pageDir, key);
+    let fileName = path.resolve(fullPathName, key + ".html");
 
     if (fs.existsSync(fileName)) {
       htmlArray.push(
@@ -36,10 +36,10 @@ function getHtmlArray(entryMap) {
           template: fileName,
           chunks: ["common", key],
         })
-      )
+      );
     }
-  })
-  return htmlArray
+  });
+  return htmlArray;
 }
 
 module.exports = {
@@ -52,6 +52,7 @@ module.exports = {
     index: "./src/pages/index/index.js",
     category: "./src/pages/category/index.js",
     detail: "./src/pages/detail/index.js",
+    evaluation: "./src/pages/evaluation/index.js",
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -119,7 +120,13 @@ module.exports = {
       // chunks 表示该页面要引用哪些 chunk （即上面的 index 和 other），默认全部引用
       chunks: ["detail"], // 只引用 index.js
     }),
+    new HtmlWebpackPlugin({
+      template: "./src/pages/evaluation/evaluation.html",
+      filename: "evaluation.html",
+      // chunks 表示该页面要引用哪些 chunk （即上面的 index 和 other），默认全部引用
+      chunks: ["evaluation"], // 只引用 index.js
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
-}
+};
