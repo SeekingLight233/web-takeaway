@@ -11,7 +11,11 @@ history.replace("menu");
 //创建路由中间件
 const historyMid = routerMiddleware(history);
 
-const store = createStore(mainReducer, applyMiddleware(thunk, historyMid));
+const store = createStore(
+  mainReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunk, historyMid)
+);
 
 //为store配置热更新
 if (module.hot) {

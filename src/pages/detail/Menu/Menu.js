@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { getListData, itemClick } from "../actions/menuAction";
 
 import MenuItem from "./MenuItem/MenuItem";
-// import ShopBar from './ShopBar/ShopBar';
+import ShopBar from "./ShopBar/ShopBar";
 
 /**
  * 点菜tab页面
@@ -111,6 +111,7 @@ class Menu extends React.Component {
           <div className="left-bar-inner">{this.renderLeft()}</div>
         </div>
         <div className="right-content">{this.renderRight()}</div>
+        <ShopBar></ShopBar>
       </div>
     );
   }

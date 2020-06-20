@@ -35,7 +35,7 @@ class Main extends React.Component {
   render() {
     return (
       <div className="detail">
-        <NavHeader title="香飘飘面馆"></NavHeader>
+        <NavHeader title="金拱门"></NavHeader>
         <div className="tab-bar">{this.renderTabs()}</div>
         <Route path="/menu" component={Menu}></Route>
         <Route path="/comment" component={Comment}></Route>
