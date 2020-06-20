@@ -1,10 +1,10 @@
-import "./Menu.scss";
+// import "./Menu.scss";
 
 import React from "react";
 
 import { connect } from "react-redux";
 
-// import { getListData, itemClick } from '../actions/menuAction';
+import { getListData, itemClick } from "../actions/menuAction";
 
 // import MenuItem from './MenuItem/MenuItem';
 // import ShopBar from './ShopBar/ShopBar';
@@ -17,7 +17,11 @@ import { connect } from "react-redux";
 class Menu extends React.Component {
   constructor(props) {
     super(props);
-    // this.props.dispatch(getListData());
+    console.log("初始化构造器");
+
+    //获取店铺菜单
+    //tips:同步操作不要放到这里，会阻塞渲染
+    this.props.dispatch(getListData());
   }
   renderRightList(array) {
     let _array = array || [];
@@ -71,14 +75,13 @@ class Menu extends React.Component {
     let list = this.props.listData.food_spu_tags || [];
 
     return list.map((item, index) => {
-      let cls =
-        this.props.currentLeftIndex === index
-          ? "left-item active"
-          : "left-item";
+      let cls = "left-item";
       return (
-        <div onClick={() => this.itemClick(index)} key={index} className={cls}>
+        <div key={index} className={cls}>
           <div className="item-text">
-            {item.icon ? <img className="item-icon" src={item.icon} /> : null}
+            {item.icon ? (
+              <img className="item-icon" src={item.icon}></img>
+            ) : null}
             {item.name}
           </div>
         </div>
@@ -86,12 +89,17 @@ class Menu extends React.Component {
     });
   }
   render() {
-    return <div className="menu-inner">menu</div>;
+    return (
+      <div className="menu-inner">
+        <div className="left-bar">
+          <div className="left-bar-inner">{this.renderLeft()}</div>
+        </div>
+        {/* <div className="right-content">{this.renderRight()}</div> */}
+      </div>
+    );
   }
 }
 
-export default connect()(Menu);
-// state =>({
-//     listData: state.menuReducer.listData,
-//     currentLeftIndex: state.menuReducer.currentLeftIndex
-// })
+export default connect((state) => ({ listData: state.menuReducer.listData }))(
+  Menu
+);

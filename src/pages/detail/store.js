@@ -7,7 +7,7 @@ import { routerMiddleware } from "react-router-redux";
 //创建hash路由
 const history = createHistory();
 //创建初始化tab
-history.replace("home");
+history.replace("menu");
 //创建路由中间件
 const historyMid = routerMiddleware(history);
 
