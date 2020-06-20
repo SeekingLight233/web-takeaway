@@ -9,6 +9,7 @@ import {
 
 const initState = {
   listData: {},
+  currentLeftIndex: 0, //当前点的是哪一个
 };
 
 const itemClick = (state, action) => {

@@ -1,4 +1,4 @@
-// import "./Menu.scss";
+import "./Menu.scss";
 
 import React from "react";
 
@@ -24,12 +24,13 @@ class Menu extends React.Component {
     this.props.dispatch(getListData());
   }
   renderRightList(array) {
-    let _array = array || [];
+    let _array = array || []; //类型保护，否则undefined.map会抛出异常
     return _array.map((item, index) => {
-      if (!item.chooseCount) {
-        item.chooseCount = 0;
-      }
-      return <MenuItem key={index} data={item} _index={index}></MenuItem>;
+      // if (!item.chooseCount) {
+      //   item.chooseCount = 0;
+      // }
+      // return <MenuItem key={index} data={item} _index={index}></MenuItem>;
+      return <div key={index}>{item.name}</div>;
     });
   }
   /**
@@ -48,16 +49,17 @@ class Menu extends React.Component {
   renderRight() {
     let index = this.props.currentLeftIndex;
     let array = this.props.listData.food_spu_tags || [];
-    let currentItem = array[index];
+    let currentItem = array[index]; //取出食物种类对应的索引
 
     if (currentItem) {
+      //每个食物种类上会有个title eg:“今晚吃鸡”
       let title = (
         <p key={1} className="right-title">
           {currentItem.name}
         </p>
       );
       return [
-        title,
+        title, //手动在数组里写jsx不要忘了给key
         <div key={2} className="right-list">
           <div className="right-list-inner">
             {this.renderRightList(currentItem.spus)}
@@ -75,9 +77,18 @@ class Menu extends React.Component {
     let list = this.props.listData.food_spu_tags || [];
 
     return list.map((item, index) => {
-      let cls = "left-item";
+      let cls =
+        this.props.currentLeftIndex === index
+          ? "left-item active"
+          : "left-item";
       return (
-        <div key={index} className={cls}>
+        <div
+          key={index}
+          className={cls}
+          onClick={() => {
+            this.itemClick(index);
+          }}
+        >
           <div className="item-text">
             {item.icon ? (
               <img className="item-icon" src={item.icon}></img>
@@ -94,12 +105,13 @@ class Menu extends React.Component {
         <div className="left-bar">
           <div className="left-bar-inner">{this.renderLeft()}</div>
         </div>
-        {/* <div className="right-content">{this.renderRight()}</div> */}
+        <div className="right-content">{this.renderRight()}</div>
       </div>
     );
   }
 }
 
-export default connect((state) => ({ listData: state.menuReducer.listData }))(
-  Menu
-);
+export default connect((state) => ({
+  listData: state.menuReducer.listData,
+  currentLeftIndex: state.menuReducer.currentLeftIndex,
+}))(Menu);

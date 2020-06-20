@@ -8,6 +8,10 @@ import {
 } from "./actionTypes";
 import axios from "axios";
 // import qs from 'component/queryString';
+
+/**
+ * @description 数据已经拉下来就不需要异步action了
+ */
 export const itemClick = (obj) => {
   return {
     type: LEFT_CLICK,
