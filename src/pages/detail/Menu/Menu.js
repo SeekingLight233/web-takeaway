@@ -26,12 +26,13 @@ class Menu extends React.Component {
   renderRightList(array) {
     let _array = array || []; //类型保护，否则undefined.map会抛出异常
     return _array.map((item, index) => {
-      // if (!item.chooseCount) {
-      //   item.chooseCount = 0;
-      // }
-      // return <MenuItem key={index} data={item} _index={index}></MenuItem>;
+      if (!item.chooseCount) {
+        //给数据项中添加一个属性,用来存储购物车中的数量
+        //因为item已经在store上了，直接添加进去就不用往store同步这个属性，很巧妙
+        item.chooseCount = 0;
+      }
       return (
-        <MenuItem key={index} data={item}>
+        <MenuItem key={index} data={item} _index={index}>
           {item.name}
         </MenuItem>
       );

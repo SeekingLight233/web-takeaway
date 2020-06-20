@@ -15,6 +15,7 @@ class MenuItem extends React.Component {
    */
   addSelectItem() {
     this.props.dispatch(
+      //当前索引传过去
       addSelectItem({
         index: this.props._index,
       })
@@ -45,7 +46,24 @@ class MenuItem extends React.Component {
           </p>
         </div>
         <div className="select-content">
-          <div className="plus"></div>
+          {item.chooseCount > 0 ? (
+            <div
+              onClick={() => {
+                this.minusSelectItem();
+              }}
+              className="minus"
+            ></div>
+          ) : null}
+          {item.chooseCount > 0 ? (
+            <div className="count">{item.chooseCount}</div>
+          ) : null}
+
+          <div
+            onClick={() => {
+              this.addSelectItem();
+            }}
+            className="plus"
+          ></div>
         </div>
       </div>
     );

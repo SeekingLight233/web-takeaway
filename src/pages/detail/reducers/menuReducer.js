@@ -34,12 +34,15 @@ const minusSelectItem = (state, action) => {
 const chooseContent = (state, action) => {
   return { ...state, showChooseContent: action.obj.flag };
 };
+
+/**
+ * @description 利用传过来的index取出store中对应的item上的数据，以便进行购物车的逻辑
+ */
 const dealWithSelectItem = (state, action, type) => {
   let listData = state.listData;
   // 找到外层，左边list列表
   let list = listData.food_spu_tags || [];
 
-  // 通过列表找到左边item使用的数据也就是点击的item数据
   // 如果传入有outindex则优先获取，没有传入则从当前的currentleftindex获取
   let currentItem =
     list[
@@ -54,7 +57,7 @@ const dealWithSelectItem = (state, action, type) => {
   } else {
     currentItem.spus[action.obj.index].chooseCount--;
   }
-
+  //重新深拷贝刚才操作的listData
   let _listData = JSON.parse(JSON.stringify(listData));
 
   return _listData;
