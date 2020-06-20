@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 import { getListData, itemClick } from "../actions/menuAction";
 
-// import MenuItem from './MenuItem/MenuItem';
+import MenuItem from "./MenuItem/MenuItem";
 // import ShopBar from './ShopBar/ShopBar';
 
 /**
@@ -30,7 +30,11 @@ class Menu extends React.Component {
       //   item.chooseCount = 0;
       // }
       // return <MenuItem key={index} data={item} _index={index}></MenuItem>;
-      return <div key={index}>{item.name}</div>;
+      return (
+        <MenuItem key={index} data={item}>
+          {item.name}
+        </MenuItem>
+      );
     });
   }
   /**

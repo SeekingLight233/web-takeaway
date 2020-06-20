@@ -48,7 +48,7 @@
     padding-bottom: px2rem(85px);
   }
   .right-content {
-    flex: 1;
+    flex: 1; //充满剩余宽度
     margin-left: px2rem(10px);
     height: 100%;
     overflow: auto;
