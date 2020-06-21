@@ -59,7 +59,7 @@
     text-align: center;
   }
   .choose-content {
-    background-color: #fff;
+    background-color: #fff; //这个颜色一定要给，不然就会成透明的了
   }
   .content-top {
     height: px2rem(35px);
@@ -68,7 +68,7 @@
 
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-end; //让元素内容居右
   }
   .clear-car {
     margin-left: px2rem(10px);
@@ -80,7 +80,7 @@
       display: block;
       background-image: url("./img/clear.jpeg");
       background-size: cover;
-
+      //不设置浮动会占据高度
       float: left;
       margin: px2rem(-1px);
       margin-right: px2rem(2px);
@@ -105,7 +105,7 @@
     padding-left: px2rem(10px);
   }
   .select-content {
-    position: relative;
+    position: relative; //用flex布局就不用absoulte进行定位了
     display: flex;
     margin-right: px2rem(8px);
   }

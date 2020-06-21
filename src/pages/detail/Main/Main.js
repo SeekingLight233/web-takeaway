@@ -40,6 +40,8 @@ class Main extends React.Component {
         <Route path="/menu" component={Menu}></Route>
         <Route path="/comment" component={Comment}></Route>
         <Route path="/restanurant" component={Restanurant}></Route>
+        {/* 显示购物车上的遮罩层 */}
+        {this.props.showChooseContent ? <div className="mask"></div> : null}
       </div>
     );
   }
@@ -49,5 +51,6 @@ class Main extends React.Component {
 export default withRouter(
   connect((state) => ({
     tabs: state.tabReducer.tabs,
+    showChooseContent: state.menuReducer.showChooseContent,
   }))(Main)
 );

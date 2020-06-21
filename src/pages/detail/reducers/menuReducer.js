@@ -40,11 +40,13 @@ const chooseContent = (state, action) => {
  * @description 利用传过来的index取出store中对应的item上的数据，以便进行购物车的逻辑
  */
 const dealWithSelectItem = (state, action, type) => {
+  //取出这家店的所以菜品数据
   let listData = state.listData;
-  // 找到外层，左边list列表
   let list = listData.food_spu_tags || [];
 
-  // 如果传入有outindex则优先获取，没有传入则从当前的currentleftindex获取
+  // 因为currentLeftIndex这个值在用户点击其他栏目时会动态变化
+  // 如果用户从购物车里操作增减，就用outIndex进行当前菜品的定位
+
   let currentItem =
     list[
       action.obj.outIndex === undefined
@@ -63,7 +65,9 @@ const dealWithSelectItem = (state, action, type) => {
 
   return _listData;
 };
-
+/**
+ * @description 将chooseCount全部置为0
+ */
 const clearCar = (state) => {
   let listData = state.listData;
   // 找到外层，左边list列表

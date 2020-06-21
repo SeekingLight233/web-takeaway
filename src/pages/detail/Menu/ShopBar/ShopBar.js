@@ -29,6 +29,7 @@ class ShopBar extends React.Component {
         let chooseCount = spus[j].chooseCount;
         if (chooseCount > 0) {
           dotNum += chooseCount;
+          //计算总价的时候记录当前菜品的“坐标”
           spus[j]._index = j;
           spus[j]._outIndex = i;
           chooseList.push(spus[j]);
@@ -48,6 +49,7 @@ class ShopBar extends React.Component {
    */
   addSelectItem(item) {
     this.props.dispatch(
+      //这个地方同时用之前的“坐标”值找到菜品的位置
       addSelectItem({
         index: item._index,
         outIndex: item._outIndex,
@@ -105,6 +107,7 @@ class ShopBar extends React.Component {
    */
   clearCar() {
     this.props.dispatch(clearCar());
+    //清空后隐藏购物车面板
     this.props.dispatch(
       showChoose({
         flag: false,
@@ -122,7 +125,9 @@ class ShopBar extends React.Component {
         {this.props.showChooseContent ? (
           <div className="choose-content">
             <div className="content-top">
-              <div className="clear-car">清空购物车</div>
+              <div className="clear-car" onClick={() => this.clearCar()}>
+                清空购物车
+              </div>
             </div>
             {this.renderChooseItem(data)}
           </div>
