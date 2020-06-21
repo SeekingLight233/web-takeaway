@@ -17,6 +17,10 @@ const itemClick = (state, action) => {
   return { ...state, currentLeftIndex: action.obj.currentLeftIndex };
 };
 const getListData = (state, action) => {
+  if (Object.keys(state.listData).length > 0) {
+    //有值的话就不用再请求了
+    return { ...state };
+  }
   return { ...state, listData: action.obj.data };
 };
 
