@@ -10,7 +10,7 @@ import {
 const initState = {
   listData: {},
   currentLeftIndex: 0, //当前点的是哪一个
-  showChooseContent: false, //默认隐藏掉
+  showChooseContent: false, //默认隐藏掉面板
 };
 
 const itemClick = (state, action) => {

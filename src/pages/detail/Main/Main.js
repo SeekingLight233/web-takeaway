@@ -23,7 +23,8 @@ class Main extends React.Component {
           key={item.key}
           to={"/" + item.key}
           replace={true}
-          activeClassName="active" //激活状态下的classname
+          activeClassName="active"
+          //激活状态下的classname
           // onClick={() => this.changeTab(item)}
         >
           {item.name}
